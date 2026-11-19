@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#087eaa">
+<title>روبوت الطاقة | المساعد الذكي لترشيد الكهرباء</title>
+<style>
+:root{--blue:#087eaa;--navy:#15384d;--cyan:#dff6ff;--mint:#e8fbf3;--line:#dcecf3;--muted:#617b89}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#eaf8ff 0%,#f6f8ff 52%,#effbf7 100%);color:var(--navy)}
+header{padding:18px 20px;background:#ffffffdf;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.head{max-width:1050px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;color:var(--blue)}
+.brandmark{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,#c9f2ff,#70cbe9);display:grid;place-items:center;font-size:25px}
+.pill{font-size:12px;background:#e8f8ef;color:#19744a;padding:7px 11px;border-radius:99px}
+main{max-width:1050px;margin:24px auto;padding:0 16px 40px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center;background:white;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:0 12px 32px #22536c10}
+h1{font-size:clamp(26px,4vw,40px);margin:0 0 10px;color:#086f98}
+.lead{line-height:1.9;color:#526f7e;margin:0 0 18px}
+.robot-stage{min-height:230px;display:grid;place-items:center;background:radial-gradient(circle,#e8faff 0,#f6fcff 60%,#fff 100%);border-radius:22px;overflow:hidden}
+.robot{position:relative;width:178px;height:185px;display:flex;align-items:center;flex-direction:column;filter:drop-shadow(0 10px 8px #0c638a22)}
+.antenna{width:8px;height:23px;background:#1699c6;border-radius:9px;margin-bottom:-2px;position:relative}
+.antenna:after{content:"";position:absolute;top:-9px;left:-5px;width:18px;height:18px;border-radius:50%;background:#ffcf62;border:3px solid white}
+.headbot{width:150px;height:112px;border:7px solid #fff;border-radius:36px;background:linear-gradient(145deg,#c9f2ff,#6fc6e8);box-shadow:inset -8px -8px 0 #47add4;position:relative;display:flex;align-items:center;justify-content:center;gap:28px}
+.eye{width:17px;height:22px;border-radius:50%;background:#164e70;box-shadow:inset 4px 3px 0 #fff}
+.smile{position:absolute;bottom:19px;width:36px;height:14px;border-bottom:4px solid #16799f;border-radius:0 0 24px 24px}
+.ear{position:absolute;top:39px;width:17px;height:38px;background:#1598c2;border:4px solid white;border-radius:10px}
+.ear.left{left:-14px}.ear.right{right:-14px}
+.bodybot{width:105px;height:57px;background:linear-gradient(145deg,#bcecff,#58b9dd);border:6px solid white;border-radius:24px;margin-top:-1px;display:grid;place-items:center;color:#087eaa;font-size:24px;font-weight:bold}
+.arm{position:absolute;top:120px;width:18px;height:48px;border-radius:15px;background:#62bfdf;border:4px solid white}
+.arm.left{left:4px;transform:rotate(18deg)}.arm.right{right:4px;transform:rotate(-18deg)}
+section.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;margin-top:18px;box-shadow:0 8px 24px #22536c09}
+h2{font-size:21px;margin:0 0 14px;color:#08769e}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:7px}
+input,select,textarea{width:100%;border:1px solid #cfe2eb;border-radius:13px;padding:12px;font:inherit;background:#fbfeff;color:var(--navy)}
+input:focus,select:focus,textarea:focus{outline:3px solid #bceeff;border-color:#5bb9dc}
+button{border:0;border-radius:13px;padding:12px 17px;background:var(--blue);color:white;font:inherit;font-weight:700;cursor:pointer;margin:5px 3px 0 0}
+button.secondary{background:#e8f5fa;color:#075b7b}
+button.green{background:#16845a}
+button:disabled{opacity:.55;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.result{background:#effaff;border:1px solid #d3eef8;border-radius:16px;padding:15px;margin-top:14px;line-height:1.85;min-height:58px}
+.chatlog{background:#f7fbfd;border:1px solid var(--line);border-radius:16px;padding:12px;min-height:100px;max-height:240px;overflow:auto;line-height:1.8}
+.msg{padding:9px 12px;border-radius:13px;margin:7px 0;max-width:94%}
+.botmsg{background:#e5f6fc;margin-left:auto}.usermsg{background:#e9f8ef;margin-right:auto}
+.note{font-size:12px;color:var(--muted);line-height:1.8}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(max-width:700px){.hero{grid-template-columns:1fr}.robot-stage{min-height:205px}.grid{grid-template-columns:1fr}.head{align-items:flex-start}.pill{max-width:135px;text-align:center}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="brand"><span class="brandmark">⚡</span> روبوت الطاقة</div><span class="pill">مشروع توعوي لترشيد الكهرباء</span></div></header>
+<main>
+<div class="hero">
+ <div>
+  <h1>مرحبًا! أنا روبوت الطاقة 🤖</h1>
+  <p class="lead">أساعد المنازل والمدارس على فهم استهلاك الكهرباء، ومقارنة القراءات، واكتشاف أسباب الزيادة المحتملة، واقتراح خطوات بسيطة للتوفير.</p>
+  <div class="actions"><button onclick="say(greeting)">🔊 اسمعوا ترحيبي</button><button class="secondary" onclick="document.getElementById('chatInput').focus()">💬 تحدثوا معي</button></div>
+ </div>
+ <div class="robot-stage" aria-label="رسم روبوت الطاقة"><div class="robot"><div class="antenna"></div><div class="headbot"><span class="ear left"></span><span class="eye"></span><span class="eye"></span><span class="ear right"></span><span class="smile"></span></div><div class="bodybot">⚡</div><span class="arm left"></span><span class="arm right"></span></div></div>
+</div>
+
+<section class="panel">
+<h2>١. تحليل استهلاك الكهرباء</h2>
+<p class="note">أدخلوا قراءتين من فاتورتين أو من سجل الاستهلاك، مع التأكد من استخدام الوحدة نفسها (كيلوواط ساعة).</p>
+<div class="grid">
+ <div><label for="oldUse">الاستهلاك السابق (kWh)</label><input id="oldUse" type="number" min="0" step="any" placeholder="مثال: 850"></div>
+ <div><label for="newUse">الاستهلاك الحالي (kWh)</label><input id="newUse" type="number" min="0" step="any" placeholder="مثال: 1100"></div>
+ <div><label for="oldDays">مدة الفترة السابقة بالأيام</label><input id="oldDays" type="number" min="1" value="30"></div>
+ <div><label for="newDays">مدة الفترة الحالية بالأيام</label><input id="newDays" type="number" min="1" value="30"></div>
+</div>
+<div class="actions"><button onclick="analyze()">حلّل الاستهلاك</button><button class="secondary" onclick="clearAnalysis()">مسح</button></div>
+<div class="result" id="analysis" aria-live="polite">ستظهر هنا نتيجة المقارنة وأسباب الزيادة المحتملة.</div>
+</section>
+
+<section class="panel">
+<h2>٢. اسألوا روبوت الطاقة</h2>
+<div class="grid">
+ <div><label for="voiceChoice">اختيار صوت الروبوت</label><select id="voiceChoice"><option value="female">👧 صوت بنت</option><option value="male">👦 صوت ولد</option></select></div>
+ <div><label for="place">المكان</label><select id="place"><option>المنزل</option><option>المدرسة</option></select></div>
+</div>
+<div class="chatlog" id="chatlog" aria-live="polite"><div class="msg botmsg">أهلًا! اسألوني عن ارتفاع الاستهلاك أو طرق توفير الكهرباء. 💙</div></div>
+<label for="chatInput" style="margin-top:14px">اكتبوا سؤالكم</label>
+<textarea id="chatInput" rows="2" placeholder="مثال: كيف أوفر الكهرباء في المدرسة؟"></textarea>
+<div class="actions"><button onclick="sendChat()">إرسال السؤال</button><button class="secondary" id="listenBtn" onclick="listen()">🎙️ تحدثوا بدل الكتابة</button><button class="secondary" onclick="stopVoice()">إيقاف الصوت</button></div>
+<p class="note" id="voiceStatus">يمكنكم اختيار صوت بنت أو ولد. نوع الصوت الفعلي يعتمد على الأصوات العربية المتوفرة في الجهاز والمتصفح.</p>
+</section>
+
+<section class="panel">
+<h2>٣. قراءة صورة الفاتورة (ميزة تجريبية)</h2>
+<p class="note">يمكن تجربة صورة فاتورة تدريبية بعد إخفاء الاسم والعنوان ورقم الحساب والباركود وأي بيانات شخصية.</p>
+<label for="billImage">اختيار صورة فاتورة</label><input id="billImage" type="file" accept="image/*">
+<div id="preview"></div>
+<div class="actions"><button class="green" onclick="readBill()">اقرأ الاستهلاك من الصورة</button></div>
+<div class="result" id="ocrResult">بعد اختيار صورة، ستظهر محاولة استخراج الأرقام هنا.</div>
+<p class="note">تحتاج هذه الميزة إلى الإنترنت لتحميل أداة قراءة النصوص، وقد تخطئ في قراءة الأرقام. راجعوا الرقم يدويًا قبل إدخاله في التحليل.</p>
+</section>
+<footer>روبوت الطاقة — نموذج أولي تعليمي. النتائج إرشادية وليست قراءة مباشرة من عداد الكهرباء.</footer>
+</main>
+<script>
+const greeting="مرحبًا! أنا روبوت الطاقة. أساعدكم على فهم استهلاك الكهرباء، واكتشاف أسباب ارتفاعه، واقتراح طرق لتوفير الطاقة في المنزل والمدرسة.";
+function voiceFor(voices,gender){
+ const ar=voices.filter(v=>/^ar([_-]|$)/i.test(v.lang));
+ const female=/female|woman|girl|zira|sara|laila|layla|mariam|hoda|heba|noura|مريم|ليلى|هدى|هبة|نورة|سارة/i;
+ const male=/male|man|boy|david|james|ahmed|omar|mohammed|محمد|أحمد|عمر|خالد/i;
+ const hint=gender==="female"?female:male;
+ return ar.find(v=>hint.test(v.name))||voices.find(v=>hint.test(v.name))||ar[0]||null;
+}
+function say(text){
+ if(!("speechSynthesis" in window)){document.getElementById("voiceStatus").textContent="متصفح الجهاز لا يدعم تشغيل الصوت.";return;}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);
+ const gender=document.getElementById("voiceChoice").value;const v=voiceFor(speechSynthesis.getVoices(),gender);
+ if(v){u.voice=v;u.lang=v.lang;}else{u.lang="ar-SA";}
+ u.rate=.94;u.pitch=gender==="female"?1.13:.88;speechSynthesis.speak(u);
+}
+function stopVoice(){if("speechSynthesis" in window)speechSynthesis.cancel();}
+function analyze(){
+ const a=Number(document.getElementById("oldUse").value),b=Number(document.getElementById("newUse").value);
+ const da=Number(document.getElementById("oldDays").value),db=Number(document.getElementById("newDays").value),out=document.getElementById("analysis");
+ if(!(a>=0&&b>=0&&da>0&&db>0)){out.textContent="فضلاً أدخلوا قراءتين صحيحتين ومدتين أكبر من صفر.";return;}
+ const oldRate=a/da,newRate=b/db,diff=(newRate-oldRate)/oldRate*100;
+ if(oldRate===0){out.textContent=`المعدل السابق ${oldRate.toFixed(2)} kWh يوميًا، والحالي ${newRate.toFixed(2)} kWh يوميًا. لا يمكن حساب نسبة التغير لأن الاستهلاك السابق صفر.`;return;}
+ const pct=Math.abs(diff).toFixed(1);
+ let msg=diff>1?`زاد متوسط الاستهلاك اليومي بنحو ${pct}٪.`:diff< -1?`انخفض متوسط الاستهلاك اليومي بنحو ${pct}٪.`:"متوسط الاستهلاك اليومي متقارب في الفترتين.";
+ const causes=diff>1?"أسباب محتملة: زيادة استخدام المكيف، ضبط التبريد على درجة منخفضة جدًا، تشغيل أجهزة كثيرة، أو ترك الإنارة والأجهزة تعمل دون حاجة.":"للمحافظة على الاستهلاك: أطفئوا الإنارة غير المستخدمة، واضبطوا المكيف باعتدال، وافصلوا الشواحن بعد الاستخدام.";
+ out.innerHTML=`${msg}<br>المعدل السابق: <b>${oldRate.toFixed(2)}</b> kWh يوميًا.<br>المعدل الحالي: <b>${newRate.toFixed(2)}</b> kWh يوميًا.<br><br>${causes}<br><br><b>اقتراح الروبوت:</b> راقبوا المكيف والأجهزة ذات الاستهلاك العالي، وقارنوا الفترات المتساوية قبل الحكم على سبب الزيادة.`;
+}
+function clearAnalysis(){["oldUse","newUse"].forEach(id=>document.getElementById(id).value="");document.getElementById("analysis").textContent="ستظهر هنا نتيجة المقارنة وأسباب الزيادة المحتملة.";}
+function addMsg(text,who){const d=document.createElement("div");d.className="msg "+(who==="user"?"usermsg":"botmsg");d.textContent=text;const log=document.getElementById("chatlog");log.appendChild(d);log.scrollTop=log.scrollHeight;}
+function answer(q){
+ const s=q.toLowerCase();
+ if(/مكيف|التكييف|حرار|بارد/.test(s))return "المكيف من الأجهزة التي قد ترفع الاستهلاك. أغلقوا الأبواب والنوافذ، ونظفوا الفلاتر دوريًا، واضبطوا درجة مناسبة، وأطفئوه عند عدم الحاجة.";
+ if(/مدرس|فصل|مدرسة/.test(s))return "في المدرسة: أطفئوا الأنوار في الفصول الفارغة، واستفيدوا من ضوء النهار، وأغلقوا الأجهزة بعد انتهاء الدوام، وعيّنوا فريقًا لمتابعة الترشيد.";
+ if(/منزل|بيت|غرف/.test(s))return "في المنزل: استخدموا إضاءة LED، وأطفئوا الأنوار غير الضرورية، وشغّلوا الغسالة بحمولة مناسبة، وافصلوا الأجهزة غير المستخدمة.";
+ if(/فاتور|استهلاك|مرتفع|زيادة|زاد/.test(s))return "قارنوا الاستهلاك بالكيلوواط ساعة مع فترة سابقة مساوية في عدد الأيام. راجعوا تشغيل المكيفات وسخان الماء والأجهزة الكبيرة، وتأكدوا من عدم وجود اختلاف في مدة الفاتورة.";
+ if(/شكر|يعطيك/.test(s))return "العفو! يسعدني أن أساعدكم. كل خطوة صغيرة في الترشيد تصنع فرقًا.";
+ return "أنصحكم بمتابعة قراءة العداد بانتظام، ومقارنة الفترات المتساوية، وإطفاء الأجهزة والإنارة عند عدم الحاجة. هل تريدون نصائح للمنزل أم للمدرسة؟";
+}
+function sendChat(){const el=document.getElementById("chatInput"),q=el.value.trim();if(!q)return;addMsg(q,"user");const a=answer(q);addMsg(a,"bot");say(a);el.value="";}
+function listen(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){document.getElementById("voiceStatus").textContent="التعرف على الكلام غير متاح في هذا المتصفح. يمكنكم الكتابة في مربع السؤال.";return;}
+ const r=new SR();r.lang="ar-SA";r.interimResults=false;r.maxAlternatives=1;
+ document.getElementById("voiceStatus").textContent="أستمع الآن... تحدثوا بوضوح.";
+ r.onresult=e=>{document.getElementById("chatInput").value=e.results[0][0].transcript;sendChat();};
+ r.onerror=()=>document.getElementById("voiceStatus").textContent="لم أتمكن من التقاط الكلام. حاولوا مرة أخرى أو اكتبوا السؤال.";
+ r.onend=()=>{if(document.getElementById("voiceStatus").textContent==="أستمع الآن... تحدثوا بوضوح.")document.getElementById("voiceStatus").textContent="انتهى الاستماع.";};
+ r.start();
+}
+document.getElementById("billImage").addEventListener("change",e=>{
+ const f=e.target.files[0],box=document.getElementById("preview");box.innerHTML="";
+ if(f){const img=document.createElement("img");img.src=URL.createObjectURL(f);img.alt="معاينة الفاتورة";img.style="max-width:100%;max-height:240px;border-radius:14px;margin-top:12px";box.appendChild(img);}
+});
+async function readBill(){
+ const f=document.getElementById("billImage").files[0],out=document.getElementById("ocrResult");
+ if(!f){out.textContent="اختاروا صورة أولًا.";return;}
+ out.textContent="جارٍ تحميل أداة قراءة النصوص ومحاولة قراءة الصورة... قد يستغرق ذلك قليلًا.";
+ try{
+  if(!window.Tesseract){await new Promise((resolve,reject)=>{const sc=document.createElement("script");sc.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";sc.onload=resolve;sc.onerror=reject;document.head.appendChild(sc);});}
+  const result=await Tesseract.recognize(f,"ara+eng");
+  const text=result.data.text||"لم يتم العثور على نص واضح.";
+  const nums=text.match(/\d[\d,٫.]*(?:\s*kWh|\s*كيلوواط)?/gi)||[];
+  out.textContent="النص المستخرج (راجعوه يدويًا):\n"+text.slice(0,1600)+"\n\nأرقام قد تكون قراءات استهلاك: "+(nums.slice(0,12).join("، ")||"لم أتعرف على أرقام واضحة.");
+ }catch(e){out.textContent="تعذرت قراءة الصورة. تأكدوا من اتصال الإنترنت، أو أدخلوا الاستهلاك يدويًا في قسم التحليل.";}
+}
+if("speechSynthesis" in window)speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
+</script>
+</body>
+</html>
